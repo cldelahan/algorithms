@@ -1,0 +1,1 @@
+// To perform a study of an specific algorithm across all possible input ranges
