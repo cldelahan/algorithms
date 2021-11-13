@@ -1,6 +1,8 @@
 #include <chrono>
 #include <iostream>
 
+#include "timer.h"
+
 namespace Timer::Timer
 {
     bool timer_running = false;
@@ -27,13 +29,13 @@ namespace Timer::Timer
         e_time = std::chrono::high_resolution_clock::now();
     }
 
-    double get_time_in_millis()
+    float get_time_in_millis()
     {
         if (timer_running)
         {
             std::cout << "WARNING: Timer is presently running. End_time overwritten." << std::endl;
             end_timer();
         }
-        return std::chrono::duration<double, std::milli>(e_time - s_time).count();
+        return std::chrono::duration<float, std::milli>(e_time - s_time).count();
     }
 }

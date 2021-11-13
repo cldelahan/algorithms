@@ -4,6 +4,8 @@
 #include <vector>
 #include <iostream>
 
+#include "random.h"
+
 namespace Simulation::Random
 {
 

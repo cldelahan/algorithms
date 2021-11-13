@@ -1,5 +1,5 @@
-#ifndef ALGO_TEST_NUMBER_FIBONACCI_GEN
-#define ALGO_TEST_NUMBER_FIBONACCI_GEN
+#ifndef ALGO_TEST_NUMBER_GEN
+#define ALGO_TEST_NUMBER_GEN
 
 namespace Test::Number::Generator
 {

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
 
+#include "fibonacci.h"
+
 namespace Number::Fibonacci
 {
 

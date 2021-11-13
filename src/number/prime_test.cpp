@@ -1,6 +1,8 @@
 #include <iostream>
 #include <math.h>
 
+#include "prime_test.h"
+
 namespace Number::PrimeTest
 {
     /**

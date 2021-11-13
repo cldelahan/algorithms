@@ -1,5 +1,7 @@
 #include <iostream>
+
 #include "../../src/simulation/random.h"
+#include "generator.h"
 
 namespace Test::Number::Generator
 {

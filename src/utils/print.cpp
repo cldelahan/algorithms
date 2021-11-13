@@ -1,9 +1,10 @@
 #include <time.h>
 #include <iostream>
 #include <stdlib.h>
-
 #include <string>
 #include <vector>
+
+#include "./print.h"
 
 namespace Utils::Print
 {
@@ -14,7 +15,7 @@ namespace Utils::Print
      * @param prefix A prefix to print after each entry
      * @param suffix A suffix to print after each entry
      */
-    void print_vector(std::vector<float> vec, std::string prefix = "", std::string suffix = ", ")
+    void print_vector(std::vector<float> vec, std::string prefix, std::string suffix)
     {
         for (float v : vec)
         {
@@ -30,7 +31,7 @@ namespace Utils::Print
      * @param prefix A prefix to print after each entry
      * @param suffix A suffix to print after each entry
      */
-    void print_vector(std::vector<int> vec, std::string prefix = "", std::string suffix = ", ")
+    void print_vector(std::vector<int> vec, std::string prefix, std::string suffix)
     {
         for (int v : vec)
         {
@@ -45,7 +46,7 @@ namespace Utils::Print
      * @param vec The matrix with values to print
      * @param prefix A prefix to print after each entry
      */
-    void print_matrix(std::vector<std::vector<float>> mat, std::string prefix = "")
+    void print_matrix(std::vector<std::vector<float>> mat, std::string prefix)
     {
         for (std::vector<float> v : mat)
         {
@@ -60,7 +61,7 @@ namespace Utils::Print
      * @param vec The matrix with values to print
      * @param prefix A prefix to print after each entry
      */
-    void print_matrix(std::vector<std::vector<int>> mat, std::string prefix = "")
+    void print_matrix(std::vector<std::vector<int>> mat, std::string prefix)
     {
         for (std::vector<int> v : mat)
         {

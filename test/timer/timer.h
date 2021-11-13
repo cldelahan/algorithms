@@ -7,7 +7,7 @@ namespace Timer::Timer
 {
     void start_timer();
     void end_timer();
-    double get_time_in_millis();
+    float get_time_in_millis();
 }
 
 #endif
