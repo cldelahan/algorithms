@@ -1,11 +1,11 @@
+#include "minimum_spanning_tree.h"
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <map>
 #include <set>
 #include <utility>
 #include <vector>
-
-#include "minimum_spanning_tree.h"
 
 namespace Graph::MinimumSpanningTree
 {
@@ -19,7 +19,7 @@ namespace Graph::MinimumSpanningTree
      *      the cost of edge i,j.
      * @return std::vector<std::vector<int>> Adjacency matrix of minimum spanning tree. 
      */
-    std::vector<std::vector<int>> mst_deterministic_prims(std::vector<std::vector<int>> graph)
+    Graph::AdjMatGraph mst_deterministic_prims(Graph::AdjMatGraph graph)
     {
         size_t v = graph.size();
 

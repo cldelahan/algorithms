@@ -5,9 +5,11 @@
 #include <utility>
 #include <vector>
 
+#include "graph.h"
+
 namespace Graph::MinimumSpanningTree
 {
-    std::vector<std::vector<int>> mst_deterministic_prims(std::vector<std::vector<int>>);
+    Graph::AdjMatGraph mst_deterministic_prims(Graph::AdjMatGraph);
 }
 
 #endif

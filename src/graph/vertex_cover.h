@@ -5,9 +5,11 @@
 #include <utility>
 #include <vector>
 
+#include "graph.h"
+
 namespace Graph::VertexCover
 {
-    std::set<int> vertex_cover_approx(std::vector<std::pair<int, int>>);
+    std::set<int> vertex_cover_approx(Graph::AdjListGraph);
 }
 
 #endif

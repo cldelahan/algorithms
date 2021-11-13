@@ -1,9 +1,10 @@
+#include "vertex_cover.h"
+
 #include <iostream>
 #include <set>
 #include <utility>
 #include <vector>
 
-#include "vertex_cover.h"
 #include "../simulation/random.h"
 
 namespace Graph::VertexCover
@@ -19,7 +20,7 @@ namespace Graph::VertexCover
      *      non-zero entry i,j is a directed edge between i and j. 
      * @return std::vector<int> 
      */
-    std::set<int> vertex_cover_approx(std::vector<std::pair<int, int>> edges)
+    std::set<int> vertex_cover_approx(Graph::AdjListGraph edges)
     {
         std::set<int> vertex_cover;
         std::pair<int, int> edge;
