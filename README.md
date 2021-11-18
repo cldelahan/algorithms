@@ -32,6 +32,6 @@ along with additional reference materials.
 Testing is an important part of any software system. However, strict "correctness-of-algorithm" testing has been put to the backseat right now. In this package, testing most often takes the form of run-time analysis and noting performance as a function of randomly-generated input.
 
 What this looks like in our case is, for each file `/src/<problemspace>/<problem>.cpp` file, there is a corresponding
-`/test/src/<problemspace>/<problem>.cpp` that performs runtime testing for algorithms for that problem. Additionally, for each problemspace, there is a `/test/<problemspace>/generator.cpp` that generates samples from that problemspace to be used as input for the testing files.
+`/test/<problemspace>/<problem>.cpp` that performs runtime testing for algorithms for that problem. Additionally, for each problemspace, there is a `/test/<problemspace>/generator.cpp` that generates samples from that problemspace to be used as input for the testing files.
 
 Finally, at `/test/src/timer` we have implemented a convienent timing mechanism to compute the runtime of different algorithms. All these presently exists as convienent methods, but can be also run standalone to see comparisions between different algorithms.
