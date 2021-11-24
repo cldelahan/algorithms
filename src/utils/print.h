@@ -8,8 +8,10 @@ namespace Utils::Print
 {
     void print_vector(std::vector<float>, std::string = "", std::string = "");
     void print_vector(std::vector<int>, std::string = "", std::string = "");
+    void print_vector(std::vector<int>, int, std::string = "", std::string = "");
     void print_matrix(std::vector<std::vector<float>>, std::string = "");
     void print_matrix(std::vector<std::vector<int>>, std::string = "");
+    void print_matrix(std::vector<std::vector<int>>, int, std::string = "");
 }
 
 #endif
