@@ -9,7 +9,7 @@
 
 namespace Graph::VertexCover
 {
-    std::set<int> vertex_cover_approx(Graph::AdjListGraph);
+    std::set<int> vertex_cover_approx(EdgeListGraph);
 }
 
 #endif

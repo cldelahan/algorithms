@@ -19,7 +19,7 @@ namespace Graph::MinimumSpanningTree
      *      the cost of edge i,j.
      * @return std::vector<std::vector<int>> Adjacency matrix of minimum spanning tree. 
      */
-    Graph::AdjMatGraph mst_deterministic_prims(Graph::AdjMatGraph graph)
+    Graph::CostMatGraph mst_deterministic_prims(Graph::CostMatGraph graph)
     {
         size_t v = graph.size();
 
@@ -27,12 +27,12 @@ namespace Graph::MinimumSpanningTree
         std::map<int, int> cost_to_connect;
         std::vector<int> parent(v, 0);
 
-        std::vector<std::vector<int>> output(v, std::vector<int>(v, 0));
+        CostMatGraph output(v, Verticies(v, NO_EDGE));
 
         // Initialize all verticies arb. far away from mst set
         for (size_t i = 1; i < v; i++)
         {
-            cost_to_connect[i] = INT_MAX;
+            cost_to_connect[i] = MAX_EDGE_COST;
         }
         // Set first vertex close to be parent
         cost_to_connect[0] = 0;
@@ -41,7 +41,7 @@ namespace Graph::MinimumSpanningTree
         {
             // Find the closest vertex not in the MST
             // TODO. Use priority queue / heap
-            int min_cost = INT_MAX;
+            int min_cost = MAX_EDGE_COST;
             int min_index = 0;
             for (size_t i = 0; i < v; i++)
             {
@@ -56,7 +56,7 @@ namespace Graph::MinimumSpanningTree
             // Update how close all other verticies are to the MST
             for (size_t i = 0; i < v; i++)
             {
-                if (graph[min_index][i] && graph[min_index][i] < cost_to_connect[i])
+                if (graph[min_index][i] < cost_to_connect[i])
                 {
                     cost_to_connect[i] = graph[min_index][i];
                     // Store the parent of each vertex in MST for ourput

@@ -9,7 +9,7 @@
 
 namespace Graph::MinimumSpanningTree
 {
-    Graph::AdjMatGraph mst_deterministic_prims(Graph::AdjMatGraph);
+    Graph::CostMatGraph mst_deterministic_prims(Graph::CostMatGraph);
 }
 
 #endif

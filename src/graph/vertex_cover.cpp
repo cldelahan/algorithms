@@ -20,7 +20,7 @@ namespace Graph::VertexCover
      *      non-zero entry i,j is a directed edge between i and j. 
      * @return std::vector<int> 
      */
-    std::set<int> vertex_cover_approx(Graph::AdjListGraph edges)
+    std::set<int> vertex_cover_approx(EdgeListGraph edges)
     {
         std::set<int> vertex_cover;
         std::pair<int, int> edge;
