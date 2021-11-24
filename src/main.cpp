@@ -6,6 +6,7 @@
 #include "array/mean.h"
 #include "graph/vertex_cover.h"
 #include "graph/minimum_spanning_tree.h"
+#include "graph/steiner_tree.h"
 #include "array/sampling.h"
 #include "simulation/random.h"
 #include "utils/print.h"
@@ -41,13 +42,15 @@ int main(int argc, char *argv[])
     /*
         Graph operations
     */
-    /*
-    std::vector<std::pair<int, int>> edges;
-    edges.push_back(std::pair<int, int>(1, 5));
-    edges.push_back(std::pair<int, int>(1, 2));
-    edges.push_back(std::pair<int, int>(2, 3));
-    edges.push_back(std::pair<int, int>(3, 4));
-    edges.push_back(std::pair<int, int>(4, 5));
+
+    using namespace Graph;
+
+    EdgeListGraph edges;
+    edges.push_back(Edge(1, 5));
+    edges.push_back(Edge(1, 2));
+    edges.push_back(Edge(2, 3));
+    edges.push_back(Edge(3, 4));
+    edges.push_back(Edge(4, 5));
 
     std::cout << "Vertex Cover 2-approx" << std::endl;
     std::set<int> vertex_cover = Graph::VertexCover::vertex_cover_approx(edges);
@@ -56,15 +59,27 @@ int main(int argc, char *argv[])
         std::cout << "Vertex: " << s << std::endl;
     }
 
-    std::vector<std::vector<int>> graph{{0, 5, 2, 3, 2},
-                                        {5, 0, 2, 1, 0},
-                                        {2, 2, 0, 4, 2},
-                                        {3, 1, 4, 0, 4},
-                                        {2, 0, 2, 4, 0}};
-    std::vector<std::vector<int>> mst = Graph::MinimumSpanningTree::mst_deterministic_prims(graph);
+    CostMatGraph graph{{NO_EDGE, 5, 2, 3, 2},
+                       {5, NO_EDGE, 2, 1, NO_EDGE},
+                       {2, 2, NO_EDGE, 4, 2},
+                       {3, 1, 4, NO_EDGE, 4},
+                       {2, NO_EDGE, 2, 4, NO_EDGE}};
+    CostMatGraph mst = Graph::MinimumSpanningTree::mst_deterministic_prims(graph);
     std::cout << "MST" << std::endl;
-    Utils::Print::print_matrix(mst);
-    */
+    Utils::Print::print_matrix(mst, NO_EDGE, ",");
+
+    CostMatGraph stm_graph{{NO_EDGE, 5, 3, 6, 1, 3, 4},
+                           {5, NO_EDGE, 3, 6, 1, 3, 4},
+                           {3, 3, NO_EDGE, 6, 1, 3, 4},
+                           {6, 6, 6, NO_EDGE, 1, 3, 4},
+                           {1, 1, 1, 1, NO_EDGE, 3, 4},
+                           {3, 3, 3, 3, 3, NO_EDGE, 4},
+                           {4, 4, 4, 4, 4, 4, NO_EDGE}};
+    Verticies terminals = Verticies{1, 3, 4, 5};
+
+    CostMatGraph steinertree = Graph::SteinerTree::steinertreemetric_approx_prims(stm_graph, terminals);
+    std::cout << "Steiner tree" << std::endl;
+    Utils::Print::print_matrix(steinertree, NO_EDGE, ",");
 
     /*
         Simulation operations
@@ -110,6 +125,7 @@ int main(int argc, char *argv[])
         Comparison operations
     */
 
+    /*
     int test_number = 100000;
     Test::Number::Comparison::ComparisonResult result =
         Test::Number::Comparison::compare(
@@ -125,4 +141,5 @@ int main(int argc, char *argv[])
     std::cout << "Input: " << test_number << std::endl;
     std::cout << "Average Time (ms): " << result.second_time_millis << std::endl;
     std::cout << "Variance (ms): " << result.second_variance << std::endl;
+    */
 }
