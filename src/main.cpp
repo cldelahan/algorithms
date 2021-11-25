@@ -79,6 +79,7 @@ int main(int argc, char *argv[])
 
     CostMatGraph steinertree = Graph::SteinerTree::steinertreemetric_approx_prims(stm_graph, terminals);
     std::cout << "Steiner tree" << std::endl;
+    std::cout << "Is example a metric? (1 - yes, 0 - no): " << Graph::is_metric(stm_graph) << std::endl;
     Utils::Print::print_matrix(steinertree, NO_EDGE, ",");
 
     /*

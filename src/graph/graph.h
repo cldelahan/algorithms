@@ -27,9 +27,14 @@ namespace Graph
     // Distinguishing between no edge (infinity) and a really large edge cost
     const int MAX_EDGE_COST = (INT_MAX - 1) / 2;
 
-    // Convienient global graph functions
-    CostMatGraph induce_subgraph(CostMatGraph, Verticies);
+    // Check graph properties
     bool is_metric(CostMatGraph);
+
+    // Get global graph properties
+    int edge_cost(CostMatGraph);
+
+    // Convienient global graph functions
+    CostMatGraph induce_subgraph(CostMatGraph, Verticies); // TODO: Make sure is not AdjListGraph
 
 }
 
