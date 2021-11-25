@@ -32,6 +32,7 @@ namespace Graph::SteinerTree
             for (size_t j = 0; j < sub_v; j++)
             {
                 vj = terminals[j];
+                // TODO: Should we make this symmetric?
                 output[vi][vj] = mst[i][j];
             }
         }

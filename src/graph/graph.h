@@ -11,6 +11,7 @@
 
 namespace Graph
 {
+    // TODO: Need to separate directed (full matrix) and non-directed (upper triangular)
     // Defining typedefs for readability
     typedef int Vertex;
     typedef std::vector<Vertex> Verticies;

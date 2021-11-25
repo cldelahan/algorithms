@@ -76,4 +76,30 @@ namespace Graph
         }
         return true;
     }
+
+    /**
+     * @brief Computes and returns the sum of all edge costs in a graph. If the graph is a tree, this
+     *      is the cost of connection. Used to validate algorithms that seek to minimize this value.
+     * 
+     * @param graph A CostMatGraph whos i,j-th elements is the cost between edge i and j. Doesn't need
+     *      to be a tree
+     * @return int The sum cost of all edges
+     */
+    int edge_cost(CostMatGraph graph)
+    {
+        // TODO: Watch out for integer overflows if costs are too large
+        int v = graph.size();
+        int sum = 0;
+        for (int i = 0; i < v; i++)
+        {
+            for (int j = 0; j < v; j++)
+            {
+                if (graph[i][j] != NO_EDGE)
+                {
+                    sum += graph[i][j];
+                }
+            }
+        }
+        return sum;
+    }
 }
