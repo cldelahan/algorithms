@@ -14,17 +14,19 @@ namespace Graph::SteinerTree
      * @param terminals The steiner terminals which we seek to connect
      * @return CostMatGraph A graph that spans all of the terminals
      */
-    CostMatGraph steinertreemetric_approx_prims(CostMatGraph graph, Verticies terminals)
+    CostMatUndirGraph steinertreemetric_approx_prims(CostMatUndirGraph graph_struct, Verticies terminals)
     {
+        CostMatGraph graph = graph_struct.graph;
         // Create a graph induced by verticies and returns Prims on it
-        CostMatGraph subgraph = induce_subgraph(graph, terminals);
+        CostMatUndirGraph subgraph = induce_subgraph(graph_struct, terminals);
 
-        Graph::CostMatGraph mst = MinimumSpanningTree::mst_deterministic_prims(subgraph);
+        CostMatUndirGraph mst = MinimumSpanningTree::mst_deterministic_prims(subgraph);
         // Expand out subgraph mst to be the same size as graph
         size_t v = graph.size();
-        size_t sub_v = subgraph.size();
+        size_t sub_v = subgraph.graph.size();
 
-        CostMatGraph output(v, Verticies(v, NO_EDGE));
+        CostMatUndirGraph output;
+        output.graph = CostMatGraph(v, Verticies(v, NO_EDGE));
         Vertex vi, vj;
         for (size_t i = 0; i < sub_v; i++)
         {
@@ -32,8 +34,8 @@ namespace Graph::SteinerTree
             for (size_t j = 0; j < sub_v; j++)
             {
                 vj = terminals[j];
-                // TODO: Should we make this symmetric?
-                output[vi][vj] = mst[i][j];
+                output.graph[vi][vj] = mst.graph[i][j];
+                output.graph[vj][vi] = mst.graph[i][j];
             }
         }
         return output;

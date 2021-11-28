@@ -19,15 +19,18 @@ namespace Graph::MinimumSpanningTree
      *      the cost of edge i,j.
      * @return std::vector<std::vector<int>> Adjacency matrix of minimum spanning tree. 
      */
-    Graph::CostMatGraph mst_deterministic_prims(Graph::CostMatGraph graph)
+    CostMatUndirGraph mst_deterministic_prims(Graph::CostMatUndirGraph graph_struct)
     {
+        std::vector<std::vector<int>> graph = graph_struct.graph;
+
         size_t v = graph.size();
 
         std::set<int> v_in_mst;
         std::map<int, int> cost_to_connect;
         std::vector<int> parent(v, 0);
 
-        CostMatGraph output(v, Verticies(v, NO_EDGE));
+        CostMatUndirGraph output;
+        output.graph = CostMatGraph(v, Verticies(v, NO_EDGE));
 
         // Initialize all verticies arb. far away from mst set
         for (size_t i = 1; i < v; i++)
@@ -68,7 +71,12 @@ namespace Graph::MinimumSpanningTree
         for (size_t i = 1; i < v; i++)
         {
             // Assign cost to be the original graph costs
-            output[parent[i]][i] = graph[parent[i]][i];
+            if (graph[parent[i]][i] != NO_EDGE)
+            {
+                output.graph[parent[i]][i] = graph[parent[i]][i];
+                // Both directions to have symmetric
+                output.graph[i][parent[i]] = graph[parent[i]][i];
+            }
         }
         return output;
     }

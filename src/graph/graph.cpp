@@ -12,10 +12,12 @@ namespace Graph
      *      which to induce the graph. The ith entry will be the ith row in the graph.
      * @return CostMatGraph A graph adjency matrix with the same size as on_verticies
      */
-    CostMatGraph induce_subgraph(CostMatGraph graph, Verticies on_verticies)
+    CostMatUndirGraph induce_subgraph(CostMatUndirGraph graph_struct, Verticies on_verticies)
     {
+        CostMatGraph graph = graph_struct.graph;
         size_t v = on_verticies.size();
-        CostMatGraph subgraph = CostMatGraph(v, Verticies(v, 0));
+        CostMatUndirGraph subgraph;
+        subgraph.graph = CostMatGraph(v, Verticies(v, 0));
 
         // Populate subgraph with edges from vertex
         Vertex vi, vj;
@@ -25,7 +27,7 @@ namespace Graph
             for (size_t j = 0; j < v; j++)
             {
                 vj = on_verticies[j];
-                subgraph[i][j] = graph[vi][vj];
+                subgraph.graph[i][j] = graph[vi][vj];
             }
         }
         return subgraph;
@@ -38,9 +40,10 @@ namespace Graph
      * @param graph An undirected graph on which to determine is a metric
      * @return bool Whether the graph is a metric or not
      */
-    bool is_metric(CostMatGraph graph)
+    bool is_metric(CostMatUndirGraph graph_struct)
     {
         // TODO: Find faster way than n^3?
+        CostMatGraph graph = graph_struct.graph;
 
         size_t v = graph.size();
 
@@ -85,9 +88,12 @@ namespace Graph
      *      to be a tree
      * @return int The sum cost of all edges
      */
-    int edge_cost(CostMatGraph graph)
+    int edge_cost(CostMatUndirGraph graph_struct)
     {
         // TODO: Watch out for integer overflows if costs are too large
+
+        CostMatGraph graph = graph_struct.graph;
+
         int v = graph.size();
         int sum = 0;
         for (int i = 0; i < v; i++)
@@ -100,6 +106,6 @@ namespace Graph
                 }
             }
         }
-        return sum;
+        return sum / 2;
     }
 }

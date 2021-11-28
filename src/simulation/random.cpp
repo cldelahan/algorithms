@@ -55,10 +55,14 @@ namespace Simulation::Random
     std::vector<int> pairwise_random_bits(int n)
     {
         std::vector<int> output(n, 0);
+        // TODO: Should these be n or n + 1
         int a = random_int(1, n + 1);
         int b = random_int(1, n + 1);
+        std::cout << "Pairwise: " << a << std::endl;
+        std::cout << "Pairwise: " << b << std::endl;
         for (int i = 0; i < n; i++)
         {
+            std::cout << "Ouput: " << (a * (i + 1) + b) % n << std::endl;
             output[i] = (a * (i + 1) + b) % n;
             output[i] = output[i] % 2;
         }
@@ -91,7 +95,7 @@ namespace Simulation::Random
                 sum += coef[j] * (int)std::pow(i + 1, j);
             }
             output[i] = sum % n;
-            output[i] = sum % 2;
+            output[i] = output[i] % 2;
         }
         return output;
     }

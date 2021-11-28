@@ -20,8 +20,10 @@ namespace Graph::VertexCover
      *      non-zero entry i,j is a directed edge between i and j. 
      * @return std::vector<int> 
      */
-    std::set<int> vertex_cover_approx(EdgeListGraph edges)
+    std::set<int> vertex_cover_approx(EdgeListUndirGraph graph_struct)
     {
+        std::vector<std::pair<Vertex, Vertex>> edges = graph_struct.graph;
+
         std::set<int> vertex_cover;
         std::pair<int, int> edge;
         int index;

@@ -45,57 +45,79 @@ int main(int argc, char *argv[])
 
     using namespace Graph;
 
-    EdgeListGraph edges;
-    edges.push_back(Edge(1, 5));
-    edges.push_back(Edge(1, 2));
-    edges.push_back(Edge(2, 3));
-    edges.push_back(Edge(3, 4));
-    edges.push_back(Edge(4, 5));
+    // Using constructor operator
+
+    CostMatUndirGraph test({{NO_EDGE, 5, 2, 3, 2},
+                            {5, NO_EDGE, 2, 1, NO_EDGE},
+                            {2, 2, NO_EDGE, 4, 2},
+                            {3, 1, 4, NO_EDGE, 4},
+                            {2, NO_EDGE, 2, 4, NO_EDGE}});
+
+    Utils::Print::print_matrix(test.graph, NO_EDGE, ",");
+
+    // Vertex Cover
+
+    EdgeListUndirGraph vc_graph;
+    vc_graph.graph.push_back(Edge(1, 5));
+    vc_graph.graph.push_back(Edge(1, 2));
+    vc_graph.graph.push_back(Edge(2, 3));
+    vc_graph.graph.push_back(Edge(3, 4));
+    vc_graph.graph.push_back(Edge(4, 5));
+
+    vc_graph.graph.push_back(Edge(5, 1));
+    vc_graph.graph.push_back(Edge(2, 1));
+    vc_graph.graph.push_back(Edge(3, 2));
+    vc_graph.graph.push_back(Edge(4, 3));
+    vc_graph.graph.push_back(Edge(5, 4));
 
     std::cout << "Vertex Cover 2-approx" << std::endl;
-    std::set<int> vertex_cover = Graph::VertexCover::vertex_cover_approx(edges);
+    std::set<int> vertex_cover = Graph::VertexCover::vertex_cover_approx(vc_graph);
     for (int s : vertex_cover)
     {
         std::cout << "Vertex: " << s << std::endl;
     }
 
-    CostMatGraph graph{{NO_EDGE, 5, 2, 3, 2},
-                       {5, NO_EDGE, 2, 1, NO_EDGE},
-                       {2, 2, NO_EDGE, 4, 2},
-                       {3, 1, 4, NO_EDGE, 4},
-                       {2, NO_EDGE, 2, 4, NO_EDGE}};
-    CostMatGraph mst = Graph::MinimumSpanningTree::mst_deterministic_prims(graph);
-    std::cout << "MST" << std::endl;
-    Utils::Print::print_matrix(mst, NO_EDGE, ",");
+    // Minimum Spanning Tree
 
-    CostMatGraph stm_graph{{NO_EDGE, 5, 3, 6, 1, 3, 4},
-                           {5, NO_EDGE, 3, 6, 1, 3, 4},
-                           {3, 3, NO_EDGE, 6, 1, 3, 4},
-                           {6, 6, 6, NO_EDGE, 1, 3, 4},
-                           {1, 1, 1, 1, NO_EDGE, 3, 4},
-                           {3, 3, 3, 3, 3, NO_EDGE, 4},
-                           {4, 4, 4, 4, 4, 4, NO_EDGE}};
+    CostMatUndirGraph mst_graph;
+    mst_graph.graph = CostMatGraph{{NO_EDGE, 5, 2, 3, 2},
+                                   {5, NO_EDGE, 2, 1, NO_EDGE},
+                                   {2, 2, NO_EDGE, 4, 2},
+                                   {3, 1, 4, NO_EDGE, 4},
+                                   {2, NO_EDGE, 2, 4, NO_EDGE}};
+    CostMatUndirGraph mst = MinimumSpanningTree::mst_deterministic_prims(mst_graph);
+    std::cout << "MST" << std::endl;
+    Utils::Print::print_matrix(mst.graph, NO_EDGE, ",");
+
+    // Steiner Tree
+
+    CostMatUndirGraph stm_graph;
+    stm_graph.graph = CostMatGraph{{NO_EDGE, 5, 3, 6, 1, 3, 4},
+                                   {5, NO_EDGE, 3, 6, 1, 3, 4},
+                                   {3, 3, NO_EDGE, 6, 1, 3, 4},
+                                   {6, 6, 6, NO_EDGE, 1, 3, 4},
+                                   {1, 1, 1, 1, NO_EDGE, 3, 4},
+                                   {3, 3, 3, 3, 3, NO_EDGE, 4},
+                                   {4, 4, 4, 4, 4, 4, NO_EDGE}};
     Verticies terminals = Verticies{1, 3, 4, 5};
 
-    CostMatGraph steinertree = Graph::SteinerTree::steinertreemetric_approx_prims(stm_graph, terminals);
+    CostMatUndirGraph steinertree = SteinerTree::steinertreemetric_approx_prims(stm_graph, terminals);
     std::cout << "Steiner tree" << std::endl;
     std::cout << "Is example a metric? (1 - yes, 0 - no): " << Graph::is_metric(stm_graph) << std::endl;
     std::cout << "Cost of connection: " << Graph::edge_cost(steinertree) << std::endl;
-    Utils::Print::print_matrix(steinertree, NO_EDGE, ",");
+    Utils::Print::print_matrix(steinertree.graph, NO_EDGE, ",");
 
     /*
         Simulation operations
     */
 
-    /*
     std::cout << "11 pairwise independent bits" << std::endl;
-    std::vector<int> p_bits = Simulation::Random::pairwise_random_bits(10);
+    std::vector<int> p_bits = Simulation::Random::pairwise_random_bits(11);
     Utils::Print::print_vector(p_bits);
 
     std::cout << "11 5-wise independent bits" << std::endl;
     std::vector<int> bits = Simulation::Random::kwise_random_bits(5, 11);
     Utils::Print::print_vector(bits);
-    */
 
     /*
         Number operations
