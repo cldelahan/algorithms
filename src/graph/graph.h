@@ -168,6 +168,7 @@ namespace Graph
 
     // Get global graph properties
     int edge_cost(CostMatUndirGraph);
+    int edge_cost(CostMatDirGraph);
 
     // Convienient global graph functions
     CostMatUndirGraph induce_subgraph(CostMatUndirGraph, Verticies); // TODO: Make sure is not AdjListGraph

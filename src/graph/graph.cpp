@@ -81,19 +81,13 @@ namespace Graph
     }
 
     /**
-     * @brief Computes and returns the sum of all edge costs in a graph. If the graph is a tree, this
-     *      is the cost of connection. Used to validate algorithms that seek to minimize this value.
+     * @brief Helper function to get the cost of CostMatGraph. Not to be exported
      * 
-     * @param graph A CostMatGraph whos i,j-th elements is the cost between edge i and j. Doesn't need
-     *      to be a tree
-     * @return int The sum cost of all edges
+     * @param graph Graph in matrix form
+     * @return int Sum of edges
      */
-    int edge_cost(CostMatUndirGraph graph_struct)
+    int edge_cost_(CostMatGraph graph)
     {
-        // TODO: Watch out for integer overflows if costs are too large
-
-        CostMatGraph graph = graph_struct.graph;
-
         int v = graph.size();
         int sum = 0;
         for (int i = 0; i < v; i++)
@@ -106,6 +100,41 @@ namespace Graph
                 }
             }
         }
+        return sum;
+    }
+
+    /**
+     * @brief Computes and returns the sum of all edge costs in a graph. If the graph is a tree, this
+     *      is the cost of connection. Used to validate algorithms that seek to minimize this value.
+     * 
+     * @param graph_struct An undirected graph who's i,j-th elements is the cost between edge i and j. Doesn't need
+     *      to be a tree
+     * @return int The sum cost of all edges
+     */
+    int edge_cost(CostMatUndirGraph graph_struct)
+    {
+        // TODO: Watch out for integer overflows if costs are too large
+
+        CostMatGraph graph = graph_struct.graph;
+        int sum = edge_cost_(graph);
         return sum / 2;
     }
+
+    /**
+     * @brief Computes and returns the sum of all edge costs in a graph. If the graph is a tree, this
+     *      is the cost of connection. Used to validate algorithms that seek to minimize this value.
+     * 
+     * @param graph_struct An directed graph who's i,j-th elements is the cost between edge i and j. Doesn't need
+     *      to be a tree
+     * @return int The sum cost of all edges
+     */
+    int edge_cost(CostMatDirGraph graph_struct)
+    {
+        // TODO: Watch out for integer overflow if costs are too large
+
+        CostMatGraph graph = graph_struct.graph;
+        int sum = edge_cost_(graph);
+        return sum;
+    }
+
 }
