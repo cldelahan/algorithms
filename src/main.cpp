@@ -4,9 +4,10 @@
 
 #include "stdio.h"
 #include "array/mean.h"
-#include "graph/vertex_cover.h"
 #include "graph/minimum_spanning_tree.h"
+#include "graph/shortest_path.h"
 #include "graph/steiner_tree.h"
+#include "graph/vertex_cover.h"
 #include "array/sampling.h"
 #include "simulation/random.h"
 #include "utils/print.h"
@@ -47,13 +48,33 @@ int main(int argc, char *argv[])
 
     // Using constructor operator
 
-    CostMatUndirGraph test({{NO_EDGE, 5, 2, 3, 2},
-                            {5, NO_EDGE, 2, 1, NO_EDGE},
+    Utils::Print::print_title("Example Constructor and Print");
+
+    CostMatUndirGraph test({{NO_EDGE, 5, NO_EDGE, NO_EDGE, NO_EDGE},
+                            {5, NO_EDGE, 2, NO_EDGE, NO_EDGE},
                             {2, 2, NO_EDGE, 4, 2},
                             {3, 1, 4, NO_EDGE, 4},
                             {2, NO_EDGE, 2, 4, NO_EDGE}});
 
     Utils::Print::print_matrix(test.graph, NO_EDGE, ",");
+
+    // Dijkstras
+
+    Verticies path = Verticies();
+    int length = ShortestPath::shortestpath_deterministic_dijkstras(test, 0, 3, path);
+    Utils::Print::print_title("Dijkstras");
+    std::cout << "Dijkstra's Run" << std::endl;
+    std::cout << "Length: " << length << std::endl;
+    Utils::Print::print_vector(path, " ");
+
+    // Floyd-Warshall's
+
+    CostMatGraph shortest_path_tree = CostMatGraph();
+    CostMatGraph shortest_paths = ShortestPath::shortestpath_deterministic_floydwarshall(test, shortest_path_tree);
+    Utils::Print::print_title("Floyd-Warshall's");
+    Utils::Print::print_matrix(shortest_paths, NO_EDGE, ",");
+    Verticies shortest_path = ShortestPath::shortestpath_treereconstruct(shortest_path_tree, 0, 3);
+    Utils::Print::print_vector(shortest_path, " ");
 
     // Vertex Cover
 
@@ -70,7 +91,7 @@ int main(int argc, char *argv[])
     vc_graph.graph.push_back(Edge(4, 3));
     vc_graph.graph.push_back(Edge(5, 4));
 
-    std::cout << "Vertex Cover 2-approx" << std::endl;
+    Utils::Print::print_title("Vertex Cover 2-approx");
     std::set<int> vertex_cover = Graph::VertexCover::vertex_cover_approx(vc_graph);
     for (int s : vertex_cover)
     {
@@ -85,11 +106,11 @@ int main(int argc, char *argv[])
                                    {2, 2, NO_EDGE, 4, 2},
                                    {3, 1, 4, NO_EDGE, 4},
                                    {2, NO_EDGE, 2, 4, NO_EDGE}};
+    Utils::Print::print_title("Minimum Spanning Tree (Prims)");
     CostMatUndirGraph mst = MinimumSpanningTree::mst_deterministic_prims(mst_graph);
-    std::cout << "MST" << std::endl;
     Utils::Print::print_matrix(mst.graph, NO_EDGE, ",");
 
-    // Steiner Tree
+    // Metric Steiner Tree
 
     CostMatUndirGraph stm_graph;
     stm_graph.graph = CostMatGraph{{NO_EDGE, 5, 3, 6, 1, 3, 4},
@@ -101,8 +122,8 @@ int main(int argc, char *argv[])
                                    {4, 4, 4, 4, 4, 4, NO_EDGE}};
     Verticies terminals = Verticies{1, 3, 4, 5};
 
+    Utils::Print::print_title("Metric Steiner Tree");
     CostMatUndirGraph steinertree = SteinerTree::steinertreemetric_approx_prims(stm_graph, terminals);
-    std::cout << "Steiner tree" << std::endl;
     std::cout << "Is example a metric? (1 - yes, 0 - no): " << Graph::is_metric(stm_graph) << std::endl;
     std::cout << "Cost of connection: " << Graph::edge_cost(steinertree) << std::endl;
     Utils::Print::print_matrix(steinertree.graph, NO_EDGE, ",");
@@ -111,11 +132,11 @@ int main(int argc, char *argv[])
         Simulation operations
     */
 
-    std::cout << "11 pairwise independent bits" << std::endl;
+    Utils::Print::print_title("Pairwise Independent Bits");
     std::vector<int> p_bits = Simulation::Random::pairwise_random_bits(11);
     Utils::Print::print_vector(p_bits);
 
-    std::cout << "11 5-wise independent bits" << std::endl;
+    Utils::Print::print_title("5-wise Independent Bits");
     std::vector<int> bits = Simulation::Random::kwise_random_bits(5, 11);
     Utils::Print::print_vector(bits);
 
