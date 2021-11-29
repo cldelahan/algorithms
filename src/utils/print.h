@@ -12,6 +12,8 @@ namespace Utils::Print
     void print_matrix(std::vector<std::vector<float>>, std::string = "");
     void print_matrix(std::vector<std::vector<int>>, std::string = "");
     void print_matrix(std::vector<std::vector<int>>, int, std::string = "");
+
+    void print_title(std::string);
 }
 
 #endif

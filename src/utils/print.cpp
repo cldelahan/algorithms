@@ -68,13 +68,13 @@ namespace Utils::Print
      * @brief Prints a matrix
      * 
      * @param mat The matrix with values to print
-     * @param prefix A prefix to print after each entry
+     * @param suffix A suffix to print after each entry
      */
-    void print_matrix(std::vector<std::vector<float>> mat, std::string prefix)
+    void print_matrix(std::vector<std::vector<float>> mat, std::string suffix)
     {
         for (std::vector<float> v : mat)
         {
-            print_vector(v, prefix);
+            print_vector(v, "", suffix);
             std::cout << std::endl;
         }
     }
@@ -83,13 +83,13 @@ namespace Utils::Print
      * @brief Prints a matrix
      * 
      * @param mat The matrix with values to print
-     * @param prefix A prefix to print after each entry
+     * @param suffix A suffix to print after each entry
      */
-    void print_matrix(std::vector<std::vector<int>> mat, std::string prefix)
+    void print_matrix(std::vector<std::vector<int>> mat, std::string suffix)
     {
         for (std::vector<int> v : mat)
         {
-            print_vector(v, prefix);
+            print_vector(v, "", suffix);
         }
         std::cout << std::endl;
     }
@@ -99,13 +99,35 @@ namespace Utils::Print
      * 
      * @param mec The matrix with values to print
      * @param ignore Values to not print
-     * @param prefix A prefix to print after each entry
+     * @param suffix A suffix to print after each entry
      */
-    void print_matrix(std::vector<std::vector<int>> mat, int ignore, std::string prefix)
+    void print_matrix(std::vector<std::vector<int>> mat, int ignore, std::string suffix)
     {
         for (std::vector<int> v : mat)
         {
-            print_vector(v, ignore, prefix);
+            print_vector(v, ignore, "", suffix);
+        }
+        std::cout << std::endl;
+    }
+
+    /**
+     * @brief Prints a title to standard out to be displayed. Used for debugging
+     *          and to make it easy to read what a section does
+     * 
+     * @param title The string to print
+     */
+    void print_title(std::string title)
+    {
+        size_t l = title.length();
+        for (size_t i = 0; i < l + 8; i++)
+        {
+            std::cout << "-";
+        }
+        std::cout << std::endl;
+        std::cout << "|   " << title << "   |" << std::endl;
+        for (size_t i = 0; i < l + 8; i++)
+        {
+            std::cout << "-";
         }
         std::cout << std::endl;
     }
