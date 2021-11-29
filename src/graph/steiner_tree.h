@@ -5,8 +5,10 @@
 
 namespace Graph::SteinerTree
 {
-    // CostMatGraph steinertreemetric_bruteforce(CostMatGraph, Verticies);
+    // CostMat steinertreemetric_bruteforce(CostMat, Verticies);
     CostMatUndirGraph steinertreemetric_approx_prims(CostMatUndirGraph, Verticies);
+    CostMatUndirGraph steinertree_approx_prims(CostMatUndirGraph, Verticies);
+    CostMatUndirGraph steinertreemetric_deterministic_dreyfus(CostMatUndirGraph, Verticies);
 }
 
 #endif

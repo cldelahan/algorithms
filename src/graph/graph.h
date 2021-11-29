@@ -24,6 +24,7 @@ namespace Graph
     typedef std::vector<Vertex> Verticies;
     typedef std::pair<Vertex, Vertex> Edge;
     typedef std::vector<Edge> Edges;
+    typedef std::vector<std::vector<Verticies>> ShortestPaths;
 
     /*
         Graphs are represented as singleton structs with a single graph parameter
