@@ -114,7 +114,6 @@ namespace Graph
     int edge_cost(CostMatUndirGraph graph_struct)
     {
         // TODO: Watch out for integer overflows if costs are too large
-
         CostMatGraph graph = graph_struct.graph;
         int sum = edge_cost_(graph);
         return sum / 2;

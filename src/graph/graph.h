@@ -6,7 +6,7 @@
 #include <vector>
 
 /*
-    Contains global infom available for all header files
+    Contains global info available for all header files
 */
 
 namespace Graph
@@ -30,14 +30,14 @@ namespace Graph
         Graphs are represented as singleton structs with a single graph parameter
         to
             1. Enforce that the algorithm and the graph make the same assumptions
-            2. Have greater transparency as to the output of an algorithm 
+            2. Have greater transparency as to the output of an algorithm
         where typedef-ing alone is not sufficient since different representations
-        may employ the same type (i.e. directed and undirected adjacency matricies) 
+        may employ the same type (i.e. directed and undirected adjacency matricies)
 
         It is relatively easy to cast between different representations, and some
         helper functions are provided to do that.
 
-        The representations take the format of 
+        The representations take the format of
         <Type><Dir/Undir>Graph
         where the type is the representation, dir / undir refers to whether it
         is directed or undirected.
@@ -78,16 +78,27 @@ namespace Graph
     };
     */
 
+    /**
+     * @brief Graph is represented by a cost-matrix, where
+     *      graph[i][j] = cost of edge (i, j). Value maxes at EDGE_MAX
+     *      and is NO_EDGE if not an edge. Since is directed, it may be
+     *      the case that graph[i][j] != graph[j][i].
+     */
     struct CostMatDirGraph
     {
-        // graph[i][j] = cost of edge (i, j). Is NO_EDGE if not an edge
         CostMatGraph graph;
 
+        /**
+         * @brief Convenience default constructor
+         */
         CostMatDirGraph()
         {
             graph = CostMatGraph();
         }
 
+        /**
+         * @brief Convenience constructor with a matrix
+         */
         CostMatDirGraph(CostMatGraph g)
         {
             graph = g;
@@ -103,16 +114,27 @@ namespace Graph
         */
     };
 
+    /**
+     * @brief Graph is represented by a cost-matrix, where
+     *      graph[i][j] = graph[j][i] =  cost of edge (i, j) = (j, i).
+     *      Value maxes at EDGE_MAX and is NO_EDGE if not an edge.
+     *      Since is non-directed, the graph is symmetric
+     */
     struct CostMatUndirGraph
     {
-        // graph[i][j] = cost of edge (i, j). Is NO_EDGE if not an edge. Is symmetric
         CostMatGraph graph;
 
+        /**
+         * @brief Convenience default constructor
+         */
         CostMatUndirGraph()
         {
             graph = CostMatGraph();
         }
 
+        /**
+         * @brief Convenience constructor with matrix
+         */
         CostMatUndirGraph(CostMatGraph g)
         {
             graph = g;
@@ -128,36 +150,54 @@ namespace Graph
         */
     };
 
+    /**
+     * @brief Graph implemented as an edge list, which is directed. Namely,
+     *      an array of edges where the order (i, j) matters. The edges
+     *      do not intrinsically have a weight
+     *
+     */
     struct EdgeListDirGraph
     {
-        // List of edges between two verticies
         EdgeListGraph graph;
 
+        /**
+         * @brief Convenience default constructor
+         */
         EdgeListDirGraph()
         {
             graph = EdgeListGraph();
         }
 
+        /**
+         * @brief Convenience list constructor
+         */
         EdgeListDirGraph(EdgeListGraph g)
         {
             graph = g;
         }
     };
 
+    /**
+     * @brief Graph implemented as an edge list, which is
+     *      undirected. Namely, if edge (i, j) and (j, i) is
+     *      in the graph, and i < j, then pair <i, j> is in the
+     *      array. There are not duplicates.
+     */
     struct EdgeListUndirGraph
     {
-        /* 
-            List of edges between two verticies.
-            If edge (i, j) and (j, i) is in the graph and i < j
-            then pair<i, j> is in the array    
-        */
         EdgeListGraph graph;
 
+        /**
+         * @brief Convenience default constructor
+         */
         EdgeListUndirGraph()
         {
             graph = EdgeListGraph();
         }
 
+        /**
+         * @brief Convenience list constructor
+         */
         EdgeListUndirGraph(EdgeListGraph g)
         {
             graph = g;

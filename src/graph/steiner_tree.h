@@ -8,7 +8,7 @@ namespace Graph::SteinerTree
     // CostMat steinertreemetric_bruteforce(CostMat, Verticies);
     CostMatUndirGraph steinertreemetric_approx_prims(CostMatUndirGraph, Verticies);
     CostMatUndirGraph steinertree_approx_prims(CostMatUndirGraph, Verticies);
-    CostMatUndirGraph steinertreemetric_deterministic_dreyfus(CostMatUndirGraph, Verticies);
+    int steinertreemetric_deterministic_dreyfus(CostMatUndirGraph, Verticies);
 }
 
 #endif

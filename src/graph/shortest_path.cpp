@@ -1,8 +1,8 @@
 #include "shortest_path.h"
 
-#include <iostream>
 #include "../utils/print.h"
 
+#include <iostream>
 #include <algorithm>
 #include <set>
 #include <vector>
@@ -12,12 +12,12 @@ namespace Graph::ShortestPath
 
     /**
      * @brief Computes the shortest path between two verticies in a graph using Dijkstra's
-     *        algorithm. Stops prematurely when the end vertex has been encountered. 
-     * 
+     *        algorithm. Stops prematurely when the end vertex has been encountered.
+     *
      * @param graph_struct The graph
      * @param start The starting vertex
      * @param end The ending vertex
-     * @param path A reference to a path vector from start to end. Includes both start and end. 
+     * @param path A reference to a path vector from start to end. Includes both start and end.
      *             Empty if there is no path
      * @return int The shortest path. NO_EDGE if there is no shortest path
      */
@@ -98,19 +98,19 @@ namespace Graph::ShortestPath
     }
 
     /**
-     * @brief Computes the all-pairs shortest paths on the input graph using 
+     * @brief Computes the all-pairs shortest paths on the input graph using
      *          the Floyd-Warshall (a.k.a Roy-Warshall) algorithm. The algorithm
-     *          runs in $|V|^3$ time and uses dynamic programming in 
-     *          determining the shortest path between (i, j) using the first 
-     *          1 vertex, 2 verticies, 3 verticies... until all nodes are 
-     *          considered. 
-     * 
-     * @param graph_struct A directed graph that does not have any negative 
+     *          runs in $|V|^3$ time and uses dynamic programming in
+     *          determining the shortest path between (i, j) using the first
+     *          1 vertex, 2 verticies, 3 verticies... until all nodes are
+     *          considered.
+     *
+     * @param graph_struct An undirected graph that does not have any negative
      *          edges or cyles
-     * @param shortest_path_tree A reference to the resultant shortest path 
-     *          tree, which can be used to determine the exact path that is 
+     * @param shortest_path_tree A reference to the resultant shortest path
+     *          tree, which can be used to determine the exact path that is
      *          shortest between two verticies (see shortestpath_treereconstruct)
-     * @return CostMatGraph A cost matrix that holds the cost to get from any 
+     * @return CostMatGraph A cost matrix that holds the cost to get from any
      *          edge to another
      */
     CostMatGraph shortestpath_deterministic_floydwarshall(CostMatUndirGraph graph_struct, CostMatGraph &shortest_path_tree)
@@ -148,14 +148,14 @@ namespace Graph::ShortestPath
     }
 
     /**
-     * @brief Using a shortest path tree, determine what is the shortest path 
+     * @brief Using a shortest path tree, determine what is the shortest path
      *          from a start vertex to an end vertex
-     * 
-     * @param shortest_path_tree The shortest path tree representation for 
+     *
+     * @param shortest_path_tree The shortest path tree representation for
      *          example as returned in the Floyd-Warshall algorithm
      * @param start The start vertex to determine the path
      * @param end The end vertex
-     * @return Verticies An vector of verticies for the path. Is empty if 
+     * @return Verticies An vector of verticies for the path. Is empty if
      *          no path exists. Includes start and end.
      */
     Verticies shortestpath_treereconstruct(CostMatGraph shortest_path_tree, Vertex start, Vertex end)

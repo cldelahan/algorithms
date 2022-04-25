@@ -1,18 +1,21 @@
 #include <iostream>
 #include <set>
+#include <map>
 #include <utility>
+#include <algorithm>
 
 #include "stdio.h"
 #include "array/mean.h"
+#include "array/sampling.h"
 #include "graph/minimum_spanning_tree.h"
 #include "graph/shortest_path.h"
 #include "graph/steiner_tree.h"
 #include "graph/vertex_cover.h"
-#include "array/sampling.h"
 #include "simulation/random.h"
-#include "utils/print.h"
+#include "set/set.h"
 #include "number/prime_test.h"
 #include "number/fibonacci.h"
+#include "utils/print.h"
 #include "../test/timer/timer.h"
 #include "../test/number/comparison.h"
 
@@ -28,7 +31,7 @@ int main(int argc, char *argv[])
         Array operations
     */
 
-    /* 
+    /*
     std::vector<float> vec;
     vec.push_back(10.);
     vec.push_back(60.);
@@ -56,7 +59,7 @@ int main(int argc, char *argv[])
                             {3, 1, 4, NO_EDGE, 4},
                             {2, NO_EDGE, 2, 4, NO_EDGE}});
 
-    Utils::Print::print_matrix(test.graph, NO_EDGE, ",");
+    Utils::Print::print_matrix<int>(test.graph, NO_EDGE, ",");
 
     // Dijkstras
 
@@ -65,7 +68,7 @@ int main(int argc, char *argv[])
     Utils::Print::print_title("Dijkstras");
     std::cout << "Dijkstra's Run" << std::endl;
     std::cout << "Length: " << length << std::endl;
-    Utils::Print::print_vector(path, " ");
+    Utils::Print::print_vector<Vertex>(path, " ");
 
     // Floyd-Warshall's
 
@@ -74,7 +77,7 @@ int main(int argc, char *argv[])
     Utils::Print::print_title("Floyd-Warshall's");
     Utils::Print::print_matrix(shortest_paths, NO_EDGE, ",");
     Verticies shortest_path = ShortestPath::shortestpath_treereconstruct(shortest_path_tree, 0, 3);
-    Utils::Print::print_vector(shortest_path, " ");
+    Utils::Print::print_vector<Vertex>(shortest_path, " ");
 
     // Vertex Cover
 
@@ -108,7 +111,7 @@ int main(int argc, char *argv[])
                                    {2, NO_EDGE, 2, 4, NO_EDGE}};
     Utils::Print::print_title("Minimum Spanning Tree (Prims)");
     CostMatUndirGraph mst = MinimumSpanningTree::mst_deterministic_prims(mst_graph);
-    Utils::Print::print_matrix(mst.graph, NO_EDGE, ",");
+    Utils::Print::print_matrix<Vertex>(mst.graph, NO_EDGE, ",");
 
     // Metric Steiner Tree
 
@@ -124,21 +127,15 @@ int main(int argc, char *argv[])
 
     Utils::Print::print_title("Metric Steiner Tree");
     CostMatUndirGraph steinertree = SteinerTree::steinertreemetric_approx_prims(stm_graph, terminals);
+    std::cout << "steinertreemetric_approx_prims()" << std::endl;
     std::cout << "Is example a metric? (1 - yes, 0 - no): " << Graph::is_metric(stm_graph) << std::endl;
     std::cout << "Cost of connection: " << Graph::edge_cost(steinertree) << std::endl;
-    Utils::Print::print_matrix(steinertree.graph, NO_EDGE, ",");
+    Utils::Print::print_matrix<Vertex>(steinertree.graph, NO_EDGE, ",");
 
-    /*
-        Simulation operations
-    */
-
-    Utils::Print::print_title("Pairwise Independent Bits");
-    std::vector<int> p_bits = Simulation::Random::pairwise_random_bits(11);
-    Utils::Print::print_vector(p_bits);
-
-    Utils::Print::print_title("5-wise Independent Bits");
-    std::vector<int> bits = Simulation::Random::kwise_random_bits(5, 11);
-    Utils::Print::print_vector(bits);
+    int cost = SteinerTree::steinertreemetric_deterministic_dreyfus(stm_graph, terminals);
+    std::cout << "steinertreemetric_deterministic_dreyfus()" << std::endl;
+    std::cout << "Is example a metrix? (1 - yes, 0 - no): " << Graph::is_metric(stm_graph) << std::endl;
+    std::cout << "Cost of connection: " << cost << std::endl;
 
     /*
         Number operations
@@ -157,6 +154,93 @@ int main(int argc, char *argv[])
     */
 
     /*
+        Set operations
+    */
+
+    Utils::Print::print_title("Set Operations");
+
+    std::set<int> test_set = std::set<int>();
+    for (int i = 0; i < 5; i++)
+    {
+        test_set.insert(i);
+    }
+    auto list_of_sets = Set::get_subsets_of_size_n(test_set, 3);
+    for (std::set<int> s : list_of_sets)
+    {
+        Utils::Print::print_set(s, "", " ");
+    }
+    std::cout << std::endl;
+
+    // Test for set of size 0 works
+
+    auto all_subsets = Set::get_all_subsets(test_set, {2, 3});
+    for (std::set<int> s : all_subsets)
+    {
+        Utils::Print::print_set(s, "", " ");
+    }
+
+    /*
+        Set Difference Testing
+    */
+    Utils::Print::print_title("Set Difference Testing");
+    std::set<int> left_set = std::set<int>();
+    std::set<int> right_set = std::set<int>();
+    for (int i = 0; i < 5; i++)
+    {
+        left_set.insert(i);
+    }
+    right_set.insert(2);
+    right_set.insert(1);
+
+    std::set<Vertex> left_minus_right;
+    std::set_difference(left_set.begin(), left_set.end(), right_set.begin(), right_set.end(),
+                        std::inserter(left_minus_right, left_minus_right.begin()));
+
+    Utils::Print::print_set(left_minus_right, "", " ");
+    std::cout << std::endl;
+
+    /*
+        Sets as Indices to Maps
+    */
+    Utils::Print::print_title("Sets as Indicies to Maps");
+    std::map<std::set<int>, int> set_map;
+    std::set<int> set_a = {1, 2, 3};
+    std::set<int> set_b = {2, 3, 4};
+    std::set<int> set_c = {4, 5, 6};
+    std::set<int> set_d = {3, 2, 1};
+    std::set<int> set_e = {1, 2, 3};
+
+    set_map[set_a] = 1;
+    set_map[set_b] = 2;
+    set_map[set_c] = 3;
+
+    std::cout << "Evaluating set_map at set C" << std::endl;
+    std::cout << "Expected: " << 3 << std::endl;
+    std::cout << "Observed: " << set_map[set_c] << std::endl;
+
+    std::cout << "Evaluating set_map at set D" << std::endl;
+    std::cout << "Expected: " << set_map[set_a] << std::endl;
+    std::cout << "Observed: " << set_map[set_d] << std::endl;
+
+    std::cout << "Evaluating set_map at set E" << std::endl;
+    std::cout << "Expected: " << set_map[set_a] << std::endl;
+    std::cout << "Observed: " << set_map[set_e] << std::endl;
+
+    /*
+     Simulation operations
+    */
+
+    /*
+    Utils::Print::print_title("Pairwise Independent Bits");
+    std::vector<int> p_bits = Simulation::Random::pairwise_random_bits(11);
+    Utils::Print::print_vector(p_bits);
+
+    Utils::Print::print_title("5-wise Independent Bits");
+    std::vector<int> bits = Simulation::Random::kwise_random_bits(5, 11);
+    Utils::Print::print_vector(bits);
+    */
+
+    /*
         Timer operations
     */
 
@@ -166,7 +250,7 @@ int main(int argc, char *argv[])
     std::cout << "Result: " << Timer::Timer::get_time_in_millis() << std::endl;
     */
 
-    /* 
+    /*
         Comparison operations
     */
 
