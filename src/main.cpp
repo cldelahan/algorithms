@@ -17,7 +17,7 @@
 #include "number/fibonacci.h"
 #include "utils/print.h"
 #include "../test/timer/timer.h"
-#include "../test/number/comparison.h"
+#include "../test/comparison.h"
 
 int main(int argc, char *argv[])
 {
@@ -254,21 +254,47 @@ int main(int argc, char *argv[])
         Comparison operations
     */
 
-    /*
+    Utils::Print::print_title("Comparing Fibonacci");
+
     int test_number = 100000;
-    Test::Number::Comparison::ComparisonResult result =
-        Test::Number::Comparison::compare(
+    Test::Comparison::ComparisonResult result1 =
+        Test::Comparison::compare(
             Number::Fibonacci::fibonacci_dynamic_programming,
             Number::Fibonacci::fibonacci_closed_form, test_number);
 
     std::cout << "Fibonocci Dynamic Programming" << std::endl;
     std::cout << "Input: " << test_number << std::endl;
-    std::cout << "Average Time (ms): " << result.first_time_millis << std::endl;
-    std::cout << "Variance (ms): " << result.first_variance << std::endl;
+    std::cout << "Average Time (ms): " << result1.first_time_millis << std::endl;
+    std::cout << "Variance (ms): " << result1.first_variance << std::endl;
 
     std::cout << "Fibonocci Closed Form" << std::endl;
     std::cout << "Input: " << test_number << std::endl;
-    std::cout << "Average Time (ms): " << result.second_time_millis << std::endl;
-    std::cout << "Variance (ms): " << result.second_variance << std::endl;
-    */
+    std::cout << "Average Time (ms): " << result1.second_time_millis << std::endl;
+    std::cout << "Variance (ms): " << result1.second_variance << std::endl;
+
+    Utils::Print::print_title("Comparing Steiner Tree");
+    CostMatUndirGraph ex_stm_graph;
+    ex_stm_graph.graph = CostMatGraph{{NO_EDGE, 5, 3, 6, 1, 3, 4},
+                                      {5, NO_EDGE, 3, 6, 1, 3, 4},
+                                      {3, 3, NO_EDGE, 6, 1, 3, 4},
+                                      {6, 6, 6, NO_EDGE, 1, 3, 4},
+                                      {1, 1, 1, 1, NO_EDGE, 3, 4},
+                                      {3, 3, 3, 3, 3, NO_EDGE, 4},
+                                      {4, 4, 4, 4, 4, 4, NO_EDGE}};
+    Verticies ex_terminals = Verticies{1, 3, 4, 5};
+
+    Test::Comparison::ComparisonResult result2 =
+        Test::Comparison::compare(
+            Graph::SteinerTree::steinertreemetric_approx_prims,
+            Graph::SteinerTree::steinertreemetric_deterministic_dreyfus, ex_stm_graph, ex_terminals, 1000);
+
+    std::cout << "Steiner Tree Metric Approximate Prims" << std::endl;
+    std::cout << "Input: " << test_number << std::endl;
+    std::cout << "Average Time (ms): " << result2.first_time_millis << std::endl;
+    std::cout << "Variance (ms): " << result2.first_variance << std::endl;
+
+    std::cout << "Steiner Tree Metric Deterministic Dreyfus-Wagner" << std::endl;
+    std::cout << "Input: " << test_number << std::endl;
+    std::cout << "Average Time (ms): " << result2.second_time_millis << std::endl;
+    std::cout << "Variance (ms): " << result2.second_variance << std::endl;
 }
