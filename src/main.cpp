@@ -298,3 +298,7 @@ int main(int argc, char *argv[])
     std::cout << "Average Time (ms): " << result2.second_time_millis << std::endl;
     std::cout << "Variance (ms): " << result2.second_variance << std::endl;
 }
+
+/*
+    Generating Random GraphsComparison operations
+*/

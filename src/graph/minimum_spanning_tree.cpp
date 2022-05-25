@@ -1,6 +1,5 @@
 #include "minimum_spanning_tree.h"
 
-#include <bits/stdc++.h>
 #include <iostream>
 #include <map>
 #include <set>
@@ -14,10 +13,10 @@ namespace Graph::MinimumSpanningTree
      * @brief Returns the minimum spanning tree of a graph supplied as an adjacency matrix with
      *      graph[i][j] = cost((i,j)), and 0 if there is no such edge using Prim's MST Algorithm.
      *      Graph should be undirected, namely graph[i][j] = graph[j][i], but must be connected.
-     * 
+     *
      * @param graph Symmetric matrix representing the adjacency matrix with non-zero entries being
      *      the cost of edge i,j.
-     * @return std::vector<std::vector<int>> Adjacency matrix of minimum spanning tree. 
+     * @return std::vector<std::vector<int>> Adjacency matrix of minimum spanning tree.
      */
     CostMatUndirGraph mst_deterministic_prims(Graph::CostMatUndirGraph graph_struct)
     {

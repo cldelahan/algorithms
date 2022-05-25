@@ -3,12 +3,12 @@
 #include "../../src/simulation/random.h"
 #include "generator.h"
 
-namespace Test::Number::Generator
+namespace Number::Test::Generator
 {
 
     /**
      * @brief Returns a random in the range [low, high) uniformly
-     * 
+     *
      * @param low The lower bound of the range, inclusive
      * @param high The upper bound of the range, exclusive
      * @return int A random integer
@@ -20,7 +20,7 @@ namespace Test::Number::Generator
 
     /**
      * @brief Returns a random float in range [low, high) uniformly
-     * 
+     *
      * @param low The lower bound of the range
      * @param high The upper bound of the range
      * @return float A random floating-point variable

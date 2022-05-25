@@ -18,6 +18,8 @@ namespace Graph
     const int NO_EDGE = INT_MAX;
     // Distinguishing between no edge (infinity) and a really large edge cost
     const int MAX_EDGE_COST = (INT_MAX - 1) / 2;
+    // Invalid number of verticies or edges
+    const int INVALID_NUM = INT_MIN;
 
     // Common typedefs for readability
     typedef int Vertex;
