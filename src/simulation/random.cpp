@@ -106,11 +106,11 @@ namespace Simulation::Random
      *      with a slight modification of eraseing the random element in the
      *      array for simple implementation (with no affect on performance).
      *      Generates n numbers from low to high, without repetition.
-     *      Returns empty array if it is not possible, or if high <= low.
      *      This algorithm is technically O(n^2)
      *
-     *
      * @cite https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+     *
+     * @throws If low >= high, or n > high - low
      *
      * @param n The number of ints to generate
      * @param low The low range of the ints
@@ -121,7 +121,7 @@ namespace Simulation::Random
     {
         if (n > high - low || high <= low)
         {
-            return {};
+            throw std::invalid_argument("invalid n, high, low arguments");
         }
         std::vector<int> output;
         // Create and populate arr with values
@@ -146,7 +146,9 @@ namespace Simulation::Random
      * @brief Generate random unique integers using a shuffling method,
      *      where an array of the ranged ints is shuffled, and then
      *      the first n is removed. Shuffling happens in O(n) time,
-     *      and thus the entire algorithm is O(n)
+     *      and thus the entire algorithm is O(n).
+     *
+     * @throws If low >= high, or n > high - low
      *
      * @param n The number of ints to generate
      * @param low The low range of the ints
@@ -164,7 +166,7 @@ namespace Simulation::Random
 
         if (n > high - low || high <= low)
         {
-            return {};
+            throw std::invalid_argument("invalid n, high, low arguments");
         }
         std::vector<int> output(n);
         // Create and populate arr with values

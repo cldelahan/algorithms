@@ -18,6 +18,7 @@
 #include "utils/print.h"
 #include "../test/timer/timer.h"
 #include "../test/comparison.h"
+#include "../test/graph/generator.h"
 
 int main(int argc, char *argv[])
 {
@@ -324,6 +325,13 @@ int main(int argc, char *argv[])
     std::cout << "Variance (ms): " << result3.second_variance << std::endl;
 
     /*
-        Generating Random GraphsComparison operations
+        Generating Random Graphs
     */
+
+    Utils::Print::print_title("Generating a Random Graph");
+    Graph::CostMatDirGraph dir_rand_graph = Test::Generator::generate_uniform_costmatdir_graph(20, 30);
+    Graph::CostMatUndirGraph undir_rand_graph = Test::Generator::generate_uniform_costmatundir_graph(20, 30);
+
+    Utils::Print::print_matrix<Vertex>(dir_rand_graph.graph, Graph::NO_EDGE);
+    Utils::Print::print_matrix<Vertex>(undir_rand_graph.graph, Graph::NO_EDGE);
 }
