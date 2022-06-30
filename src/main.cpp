@@ -297,8 +297,33 @@ int main(int argc, char *argv[])
     std::cout << "Input: " << test_number << std::endl;
     std::cout << "Average Time (ms): " << result2.second_time_millis << std::endl;
     std::cout << "Variance (ms): " << result2.second_variance << std::endl;
-}
 
-/*
-    Generating Random GraphsComparison operations
-*/
+    /*
+        Generating random vectors
+    */
+
+    Utils::Print::print_title("Generating Random Vectors");
+
+    std::vector<int> arr1 = Simulation::Random::random_unique_ints_fisheryates(30, 10, 50);
+    std::vector<int> arr2 = Simulation::Random::random_unique_ints_sort(30, 10, 50);
+
+    // Utils::Print::print_vector<int>(arr1, " ");
+    // Utils::Print::print_vector<int>(arr2, " ");
+
+    Test::Comparison::ComparisonResult result3 =
+        Test::Comparison::compare(
+            Simulation::Random::random_unique_ints_fisheryates,
+            Simulation::Random::random_unique_ints_sort, 3000, 1000, 5000, 1000);
+
+    std::cout << "Random Uniuqe Int Array Fisher Yates" << std::endl;
+    std::cout << "Average Time (ms): " << result3.first_time_millis << std::endl;
+    std::cout << "Variance (ms): " << result3.first_variance << std::endl;
+
+    std::cout << "Random Uniuqe Int Array Sort" << std::endl;
+    std::cout << "Average Time (ms): " << result3.second_time_millis << std::endl;
+    std::cout << "Variance (ms): " << result3.second_variance << std::endl;
+
+    /*
+        Generating Random GraphsComparison operations
+    */
+}

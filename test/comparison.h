@@ -134,6 +134,53 @@ namespace Test::Comparison
         ComparisonResult result = compute_comparison_result(&a1_times, &a2_times);
         return result;
     }
+
+    /**
+     * @brief Compares two algorithms that accept the same input,
+     *      and returns a class containing runtime performance
+     *      data. The input must be three arguments.
+     *      NOTE: The intent is that the types U and V (the output
+     *      for algorithm one and two) are the same. However,
+     *      since some algorithms best are structured to return
+     *      different types, it has been decided to  not enforce
+     *      that their return types are the same
+     *
+     * @tparam T1 The first input type of the algorithm
+     * @tparam T2 The second input type of the algorithm
+     * @tparam T3 The third imput type of the algorithm
+     * @tparam U The output type of algorithm one
+     * @tparam V The output type of algorithm two
+     * @param a1 Algorithm one function pointer
+     * @param a2 Algorithm two function pointer
+     * @param input The input to test both algorithms with
+     * @param iterations Number of iterations to assess
+     * @return ComparisonResult The result of the comparision
+     */
+    template <typename T1, typename T2, typename T3, typename U, typename V>
+    inline ComparisonResult compare(U (*a1)(T1, T2, T3), V (*a2)(T1, T2, T3), T1 input1, T2 input2, T3 input3, int iterations = 1000)
+    {
+        std::vector<float> a1_times(iterations);
+        std::vector<float> a2_times(iterations);
+
+        for (int i = 0; i < iterations; i++)
+        {
+            Timer::Timer::start_timer();
+            (*a1)(input1, input2, input3); // Run second algorithm
+            Timer::Timer::end_timer();
+            a1_times[i] = Timer::Timer::get_time_in_millis();
+        }
+
+        for (int i = 0; i < iterations; i++)
+        {
+            Timer::Timer::start_timer();
+            (*a2)(input1, input2, input3); // Run second algorithm
+            Timer::Timer::end_timer();
+            a2_times[i] = Timer::Timer::get_time_in_millis();
+        }
+
+        ComparisonResult result = compute_comparison_result(&a1_times, &a2_times);
+        return result;
+    }
 }
 
 #endif
