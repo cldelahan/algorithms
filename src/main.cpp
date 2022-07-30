@@ -19,6 +19,8 @@
 #include "../test/timer/timer.h"
 #include "../test/comparison.h"
 #include "../test/graph/generator.h"
+#include "../test/number/generator.h"
+#include "../test/runtime.h"
 
 int main(int argc, char *argv[])
 {
@@ -334,4 +336,14 @@ int main(int argc, char *argv[])
 
     Utils::Print::print_matrix<Vertex>(dir_rand_graph.graph, Graph::NO_EDGE);
     Utils::Print::print_matrix<Vertex>(undir_rand_graph.graph, Graph::NO_EDGE);
+
+    /*
+        Compute runtime from an algorithm
+    */
+    Utils::Print::print_title("Computing Runtime of an Algorithm");
+    Test::Runtime::RuntimeResult runtime_result =
+        Test::Runtime::compute_runtime(
+            Number::Fibonacci::fibonacci_dynamic_programming,
+            Test::Generator::generate_self_int);
+    Utils::Print::print_matrix<float>(runtime_result.coeffs, " ");
 }
